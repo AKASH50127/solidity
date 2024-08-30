@@ -21,50 +21,27 @@ Copy code
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
-
-contract MyToken is Ownable {
+contract MyToken {
     // Public variables to store token details
-    string public tokenName;
-    string public tokenAbbrev;
-    uint public totalSupply;
+    string public tokenName = "Akash kumar";
+    string public tokenAbbrev = "AK";
+    uint public totalSupply = 0;
 
     // Mapping to store balances of addresses
     mapping(address => uint) public balances;
 
-    // Events to log minting and burning actions
-    event Mint(address indexed to, uint value);
-    event Burn(address indexed from, uint value);
-
-    // Constructor to initialize the token details
-    constructor() {
-        tokenName = "META";
-        tokenAbbrev = "MTA";
-        totalSupply = 0;
-    }
-
     // Function to mint new tokens
-    function mint(address _address, uint _value) public onlyOwner {
-        require(_address != address(0), "Cannot mint to the zero address");
+    function mint(address _address, uint _value) public {
         totalSupply += _value;
         balances[_address] += _value;
-        emit Mint(_address, _value);
     }
 
     // Function to burn tokens
-    function burn(address _address, uint _value) public onlyOwner {
-        require(_address != address(0), "Cannot burn from the zero address");
+    function burn(address _address, uint _value) public {
         require(balances[_address] >= _value, "Insufficient balance to burn");
         totalSupply -= _value;
         balances[_address] -= _value;
-        emit Burn(_address, _value);
     }
-
-    // Optional: Receive function to accept ETH
-    receive() external payable {}
-
-    // Optional: Fallback function to handle any fallback calls
-    fallback() external payable {}
 }
 Compile the Code:
 Click on the "Solidity Compiler" tab in the left-hand sidebar.
