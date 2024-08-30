@@ -1,34 +1,25 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.18;
+pragma solidity ^0.8.18;
 
 contract MyToken {
+    // Public variables to store token details
+    string public tokenName = "Akash kumar";
+    string public tokenAbbrev = "AK";
+    uint public totalSupply = 0;
 
-    // Public variables to store the details about the token
-    string public tokenName = "MyToken";
-    string public tokenAbbrv = "MTK";
-    uint256 public totalSupply;
+    // Mapping to store balances of addresses
+    mapping(address => uint) public balances;
 
-    // Mapping to store the balance of each address
-    mapping(address => uint256) public balances;
-
-    // Mint function to create new tokens
-    function mint(address _to, uint256 _value) public {
-        // Increase the total supply by the value to be minted
+    // Function to mint new tokens
+    function mint(address _address, uint _value) public {
         totalSupply += _value;
-
-        // Increase the balance of the specified address
-        balances[_to] += _value;
+        balances[_address] += _value;
     }
 
-    // Burn function to destroy tokens
-    function burn(address _from, uint256 _value) public {
-        // Check that the balance of the sender is greater than or equal to the value to be burned
-        require(balances[_from] >= _value, "Insufficient balance to burn");
-
-        // Decrease the total supply by the value to be burned
+    // Function to burn tokens
+    function burn(address _address, uint _value) public {
+        require(balances[_address] >= _value, "Insufficient balance to burn");
         totalSupply -= _value;
-
-        // Decrease the balance of the specified address
-        balances[_from] -= _value;
+        balances[_address] -= _value;
     }
 }
